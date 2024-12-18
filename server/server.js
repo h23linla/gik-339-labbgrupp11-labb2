@@ -1,22 +1,17 @@
 const express = require("express");
-const cors = require("cors");
 const server = express();
 const sqlite3 = require("sqlite3").verbose();
 
 server.use(express.json()).use(express.urlencoded({ extended: false }));
-server.use(cors());
 
 server.get("/users", (req, res) => {
-    const method = req.method;
-    const url = req.url;
     const db = new sqlite3.Database("./gik339-labb2.db");
 
     const sql = "SELECT * FROM users";
     db.all(sql, (err, rows) => {
         res.send(rows);
     });
-
-    //res.send(`Du gjorde en ${method} förfrågan till url:en ${url}`)
+    db.close();
 });
 
 server.put("/users", (req, res) => {

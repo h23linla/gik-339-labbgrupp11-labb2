@@ -1,36 +1,27 @@
-/*function printTimeStamp() {
-    const date = new Date();
-    return `${date.getHours()}:${date.getMinutes() > 9 ? date.getMinutes() : `0${date.getMinutes()}`}:${
-        date.getSeconds() > 9 ? date.getSeconds() : `0${date.getSeconds()}`
-    }`;
-}
-
-function getUserWithoutPromise() {
-    let user = { firstName: "Namn" };
-    return user;
-}
-
-function getUserWithPromise(ok) {
-    return new Promise((reslove, reject) => {
-        setTimeout(() => {
-            if (!ok) reject(printTimeStamp() + "Något blev fel!");
-            else reslove({ firstName: "Namn" });
-        }, 3000);
-    });
-}
-
-const user = getUserWithoutPromise();
-console.log(printTimeStamp(), user);*/
-
 const url = 'http://localhost:3000/users';
 
-fetch(url, { mode: "cors" })
-    .then((response) => {
-        console.log(response);
-        return response.json();
-    })
+fetch(url)
+    .then((response) => response.json())
     .then((users) => {
         console.log(users);
-        const html = users.map(user => `<p>${user.firstName}</p>`).join("");
-        document.body.insertAdjacentHTML("beforeend", html);
+
+        const ul = document.createElement("ul");
+        ul.classList.add("class-list"); //klass för styling
+
+        users.forEach(user => {
+            const li = document.createElement("li"); 
+            li.classList.add("class-item"); //klass för styling
+            li.innerHTML = `
+            <p><strong>Namn:</strong> ${user.firstName} ${user.lastName}</p>
+            <p><strong>Användarnamn:</strong> ${user.username}</p>
+            <p><strong>ID:</strong> ${user.id}</p>
+            <p><strong>Färg:</strong> ${user.color}</p>
+            `;
+
+            li.style.backgroundColor = user.color;
+
+            ul.appendChild(li);
+        });
+
+        document.body.appendChild(ul);
 });
