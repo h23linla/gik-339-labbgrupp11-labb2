@@ -6,11 +6,11 @@ fetch(url)
         console.log(users);
 
         const ul = document.createElement("ul");
-        ul.classList.add("class-list"); //klass för styling
+        ul.classList.add("class-list");
 
         users.forEach(user => {
             const li = document.createElement("li"); 
-            li.classList.add("class-item"); //klass för styling
+            li.classList.add("class-item");
             li.innerHTML = `
             <p><strong>Namn:</strong> ${user.firstName} ${user.lastName}</p>
             <p><strong>Användarnamn:</strong> ${user.username}</p>
